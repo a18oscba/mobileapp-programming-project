@@ -1,42 +1,40 @@
+Min idé med appen är att vi lever i en värld där deet är populärt att resa runt. Jag tänkte att man kan ha ett par länder där när man trycker på en av dem visas lite fakta om dem som tex terräng och geografisk plats.
 
-# Rapport
+Dem följande bilderna visar hur appen ser ut frånstart, vid tryck av objekt i listan och about sidan.
 
-**Skriv din rapport här!**
+![image](https://user-images.githubusercontent.com/62877630/235787458-1c64ce80-3d58-4e41-8862-f5dbe1b8c646.png)
+![image](https://user-images.githubusercontent.com/62877630/235787524-e4cf5075-ee1e-4ccb-b53f-d2b9eef2f8b4.png)
 
-_Du kan ta bort all text som finns sedan tidigare_.
-
-## Följande grundsyn gäller dugga-svar:
-
-- Ett kortfattat svar är att föredra. Svar som är längre än en sida text (skärmdumpar och programkod exkluderat) är onödigt långt.
-- Svaret skall ha minst en snutt programkod.
-- Svaret skall inkludera en kort övergripande förklarande text som redogör för vad respektive snutt programkod gör eller som svarar på annan teorifråga.
-- Svaret skall ha minst en skärmdump. Skärmdumpar skall illustrera exekvering av relevant programkod. Eventuell text i skärmdumpar måste vara läsbar.
-- I de fall detta efterfrågas, dela upp delar av ditt svar i för- och nackdelar. Dina för- respektive nackdelar skall vara i form av punktlistor med kortare stycken (3-4 meningar).
-
-Programkod ska se ut som exemplet nedan. Koden måste vara korrekt indenterad då den blir lättare att läsa vilket gör det lättare att hitta syntaktiska fel.
-
+Listan är simpelt designad av nedan kod:
 ```
-function errorCallback(error) {
-    switch(error.code) {
-        case error.PERMISSION_DENIED:
-            // Geolocation API stöds inte, gör något
-            break;
-        case error.POSITION_UNAVAILABLE:
-            // Misslyckat positionsanrop, gör något
-            break;
-        case error.UNKNOWN_ERROR:
-            // Okänt fel, gör något
-            break;
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@android:color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/list_item_textview.xml">
+</TextView>
+```
+
+Informationen ovan visas med hjälp av kod snutten nedan, den hämtar informationen lagrad på servern med hjälp av getter funtionerna i TravelNations klassen.
+```
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int i, long l) {
+                String message = "The town" +
+                        " " + travelNations.get(i).getName() + " is located in " + travelNations.get(i).getLocation() +
+                        " and the terrain consists mostly of " + travelNations.get(i).getCategory();
+                Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
+            }
+        });
+```
+Nedan är en kodsnutt som omderigerar dig till about sidan som förklarar syftet med applikationen:
+```
+    public void GoToAbout(){
+        Intent intent = new Intent(this, AboutActivity.class);
+        startActivity(intent);
     }
-}
 ```
+Med hjälp av den funktionen så kan vi se sidan nedan.
 
-Bilder läggs i samma mapp som markdown-filen.
-
-![](android.png)
-
-Läs gärna:
-
-- Boulos, M.N.K., Warren, J., Gong, J. & Yue, P. (2010) Web GIS in practice VIII: HTML5 and the canvas element for interactive online mapping. International journal of health geographics 9, 14. Shin, Y. &
-- Wunsche, B.C. (2013) A smartphone-based golf simulation exercise game for supporting arthritis patients. 2013 28th International Conference of Image and Vision Computing New Zealand (IVCNZ), IEEE, pp. 459–464.
-- Wohlin, C., Runeson, P., Höst, M., Ohlsson, M.C., Regnell, B., Wesslén, A. (2012) Experimentation in Software Engineering, Berlin, Heidelberg: Springer Berlin Heidelberg.
+![image](https://user-images.githubusercontent.com/62877630/235788502-0db7727f-17ab-4cc0-ba9c-9338706d60aa.png)
